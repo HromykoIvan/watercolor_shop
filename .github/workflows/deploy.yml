@@ -3,7 +3,7 @@ name: Deploy to AWS
 on:
   push:
     branches:
-      - master
+      - release/1.0
 
 jobs:
   deploy:
@@ -19,8 +19,29 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
 
-      - name: Install dependencies
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Install backend dependencies
+        working-directory: cdk
         run: npm install
 
+      - name: Install frontend dependencies
+        working-directory: watercolor-shop-frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: watercolor-shop-frontend
+        run: npm run build
+
+      - name: Synthesize CloudFormation template
+        working-directory: cdk
+        run: npx cdk synth
+
       - name: Deploy with CDK
+        working-directory: cdk
         run: npx cdk deploy --require-approval never
+
+      - name: Log AWS Resources
+        working-directory: cdk
+        run: npx cdk list
