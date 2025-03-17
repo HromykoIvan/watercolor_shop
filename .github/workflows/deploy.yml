@@ -34,6 +34,10 @@ jobs:
         working-directory: watercolor-shop-frontend
         run: npm run build
 
+      - name: Bootstrap AWS CDK
+        working-directory: cdk
+        run: npx cdk bootstrap aws://290543301233/eu-central-1
+
       - name: Synthesize CloudFormation template
         working-directory: cdk
         run: npx cdk synth
