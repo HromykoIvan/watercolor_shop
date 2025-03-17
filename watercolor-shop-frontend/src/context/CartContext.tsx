@@ -11,6 +11,7 @@ type Painting = {
 type CartContextType = {
   cart: Painting[];
   addToCart: (painting: Painting) => void;
+  removeFromCart: (title: string) => void; // ✅ Добавлено
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -22,8 +23,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCart([...cart, painting]);
   };
 
+  const removeFromCart = (title: string) => {
+    setCart((prevCart) => prevCart.filter((item) => item.title !== title)); // ✅ Удаление товара из корзины
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );

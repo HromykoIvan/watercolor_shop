@@ -11,14 +11,15 @@ export default function Cart() {
         <p className="text-center text-gray-500">Корзина пуста</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cart.map((item, index) => (
-            <div key={index} className="border p-4 rounded-lg shadow-md bg-white">
+          {cart.map((item) => (
+            <div key={item.title} className="border p-4 rounded-lg shadow-md bg-white">
               <Image src={item.image} alt={item.title} width={200} height={200} className="rounded-md" />
               <h2 className="text-xl font-semibold mt-4">{item.title}</h2>
               <p className="text-lg text-gray-600">{item.price}</p>
               <button
                 onClick={() => removeFromCart(item.title)}
                 className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                aria-label={`Удалить ${item.title} из корзины`}
               >
                 Удалить ❌
               </button>
