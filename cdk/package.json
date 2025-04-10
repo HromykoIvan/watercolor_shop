@@ -5,10 +5,11 @@
     "cdk": "bin/cdk.js"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+  "build": "tsc && next build",
+  "watch": "tsc -w",
+  "test": "jest",
+  "cdk": "cdk",
+  "export": "next export"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
