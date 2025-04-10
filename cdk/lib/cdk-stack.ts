@@ -1,7 +1,10 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import {
+  BucketDeployment,
+  Source
+} from 'aws-cdk-lib/aws-s3-deployment';
 import * as s3 from 'aws-cdk-lib/aws-s3';
-import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import { RemovalPolicy } from 'aws-cdk-lib';
 
 export class CdkStack extends cdk.Stack {
@@ -12,13 +15,18 @@ export class CdkStack extends cdk.Stack {
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'index.html',
       publicReadAccess: true,
+      blockPublicAccess: new s3.BlockPublicAccess({
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false
+      }),
       removalPolicy: RemovalPolicy.DESTROY
     });
 
-    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
-      sources: [s3deploy.Source.asset('../watercolor-shop-frontend/out')],
+    new BucketDeployment(this, 'DeployWebsite', {
+      sources: [Source.asset('../watercolor-shop-frontend/out')],
       destinationBucket: websiteBucket
     });
   }
 }
-
