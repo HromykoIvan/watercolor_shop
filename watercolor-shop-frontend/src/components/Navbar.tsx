@@ -1,18 +1,33 @@
 "use client";
-import Link from "next/link";
-import { useCart } from "@/context/CartContext";
+
+import Image from "next/image";
 
 export default function Navbar() {
-  const { cart } = useCart();
-
   return (
-    <nav className="p-4 bg-blue-500 text-white flex justify-between">
-      <h1 className="text-xl font-bold">Watercolor Art Shop</h1>
-      <div className="space-x-4">
-        <Link href="/">Главная</Link>
-        <Link href="/gallery">Галерея</Link>
-        <Link href="/cart">Корзина ({cart.length})</Link>
+    <header className="relative w-full h-screen bg-[#0a0a0a]">
+      {/* Фоновое изображение */}
+      <div className="absolute inset-0">
+        <Image
+          src="/paintings/brush-hero.png"
+          alt="background"
+          fill
+          priority
+          className="object-cover"
+        />
       </div>
-    </nav>
+
+      {/* Затемнение */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* Заголовок */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <h1 className="text-5xl sm:text-7xl font-playfair tracking-widest text-white text-center mb-6">
+          WATERCOLOR GALLERY
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-300 text-center max-w-2xl mx-auto px-4">
+          Уникальные картины, вдохновленные природой и эмоциями
+        </p>
+      </div>
+    </header>
   );
 }
